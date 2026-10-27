@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens (single source of truth) ---------- */
+@theme {
+  --color-brand: #e30613;
+  --color-brand-600: #c40511;
+  --color-brand-700: #a3040e;
+  --color-brand-50: #fff1f2;
+
+  --color-ink: #0b0b0d;
+  --color-ink-800: #16161a;
+  --color-ink-700: #22222a;
+  --color-ink-600: #2e2e38;
+
+  --color-surface: #f5f5f7;
+  --color-line: #e6e6ea;
+  --color-muted: #6b6b76;
+
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), var(--font-inter), ui-sans-serif, sans-serif;
+
+  --radius-xl: 0.875rem;
+  --shadow-card: 0 1px 2px rgb(11 11 13 / 0.04), 0 8px 24px -12px rgb(11 11 13 / 0.12);
+  --shadow-card-hover: 0 2px 4px rgb(11 11 13 / 0.06), 0 20px 40px -16px rgb(11 11 13 / 0.25);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+  /* Slightly smaller type & spacing on laptop screens (all sizes are rem-based) */
+  @media (min-width: 1024px) and (max-width: 1535px) {
+    html {
+      font-size: 93.75%; /* 15px */
+    }
+  }
+  body {
+    @apply bg-white font-sans text-ink;
+    overflow-x: clip; /* safety net: no sideways scroll on mobile */
+  }
+  /* iOS Safari zooms into fields with font-size < 16px — prevent it on phones */
+  @media (max-width: 639px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand;
+  }
+}
+
+/* ---------- Custom utilities (Tailwind v4 syntax) ---------- */
+@utility container-page {
+  @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-16 xl:px-24 2xl:px-10;
+}
+
+/* Premium dark backdrop with a red glow, used for hero/banners */
+@utility bg-hero {
+  background:
+    radial-gradient(60% 80% at 85% 30%, rgb(227 6 19 / 0.28), transparent 60%),
+    radial-gradient(40% 60% at 10% 100%, rgb(255 255 255 / 0.06), transparent 70%),
+    linear-gradient(135deg, #0b0b0d 0%, #16161a 55%, #0b0b0d 100%);
+}
+
+@utility bg-grid {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Dual-handle price slider: two stacked range inputs, only the thumbs are interactive */
+.range-dual input[type="range"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  margin: 0;
+  appearance: none;
+  background: none;
+  pointer-events: none;
+}
+.range-dual input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--color-brand);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+  cursor: grab;
+}
+.range-dual input[type="range"]::-moz-range-thumb {
+  pointer-events: auto;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: var(--color-brand);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+  cursor: grab;
+}
+.range-dual input[type="range"]::-moz-range-track {
+  background: none;
+}
