@@ -17,8 +17,8 @@ type Props = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-export async function generateStaticParams({ params }: { params: { locale: Locale } }) {
-  return (await getCategories(params.locale)).map((c) => ({ slug: c.slug }));
+export async function generateStaticParams({ params }: { params: { locale: string } }) {
+  return (await getCategories(params.locale as Locale)).map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
